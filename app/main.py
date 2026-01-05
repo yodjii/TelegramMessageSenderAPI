@@ -8,7 +8,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-app = FastAPI(title="Telegram Api Sender")
+app = FastAPI(title="Telegram Api Sender", root_path=config.root_path)
 
 # Mount static files using absolute path
 static_dir = os.path.join(BASE_DIR, "static")

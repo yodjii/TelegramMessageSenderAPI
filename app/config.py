@@ -19,6 +19,7 @@ class AppConfig:
         
         self.config_path = os.getenv("CONFIG_FILE", default_config)
         self.default_bot_name = os.getenv("DEFAULT_BOT_NAME", "bot1")
+        self.root_path = os.getenv("ROOT_PATH", "")
         self._config_data = self._load_config()
 
     def _load_config(self) -> Dict:
