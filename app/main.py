@@ -6,15 +6,18 @@ from app.services.telegram import telegram_service
 from app.config import config
 import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 app = FastAPI(title="Telegram Api Sender")
 
-# Mount static files for the web interface
-# We'll use the static folder for both index.html and any assets
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+# Mount static files using absolute path
+static_dir = os.path.join(BASE_DIR, "static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_index():
-    with open("app/static/index.html", "r", encoding="utf-8") as f:
+    index_path = os.path.join(static_dir, "index.html")
+    with open(index_path, "r", encoding="utf-8") as f:
         return f.read()
 
 @app.get("/bots")
@@ -44,4 +47,7 @@ async def send_message(request: MessageRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Use AlwaysData environment variables if available, else fallback to defaults
+    host = os.getenv("IP", "0.0.0.0")
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host=host, port=port)

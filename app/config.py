@@ -13,7 +13,11 @@ class BotConfig(BaseModel):
 
 class AppConfig:
     def __init__(self):
-        self.config_path = os.getenv("CONFIG_FILE", "config/bots.json")
+        # Resolve path relative to the project root (one level up from app/)
+        self.base_dir = Path(__file__).resolve().parent.parent
+        default_config = str(self.base_dir / "config" / "bots.json")
+        
+        self.config_path = os.getenv("CONFIG_FILE", default_config)
         self.default_bot_name = os.getenv("DEFAULT_BOT_NAME", "bot1")
         self._config_data = self._load_config()
 
