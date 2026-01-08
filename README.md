@@ -60,7 +60,6 @@ Ces choix ont été faits pour rester focalisé sur l’objectif principal :
 ## Améliorations possibles
 
 - Authentification par token
-- Support multi-chats ou multi-bots
 - Templates de messages
 - Logs et monitoring
 - Conteneurisation Docker
